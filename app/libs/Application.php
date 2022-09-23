@@ -13,8 +13,20 @@ class Application
 {
     function __construct()
     {
+        print ('funciona¿');
         $db = Mysqldb::getInstance()->getDatabase();
 
-        print 'Bienvenido a mi tienda virtual';
+        $url = $this->separarURL();
+
+        var_dump($url);
+
+    }
+
+    public function separarURL()
+    {
+        if ($_SERVER['REQUEST_URI'] != '/'){
+
+        }
+
     }
 }

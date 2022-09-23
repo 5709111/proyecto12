@@ -10,7 +10,7 @@ class Mysqldb
     private $host = 'mysql';
     private $user = 'default';
     private $pass = 'secret';
-    private $dbname = 'tiendamvc';
+    private $dbname = 'proyecto12';
 
     // Atributos
     private static $instancia = null;
