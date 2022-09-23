@@ -4,14 +4,17 @@
  * La clase Application maneja la URL y lanza los procesos
  * 
 */
+
+/**
+ * La clase Application maneja la URL y lanza los procesos
+ */
+
 class Application
 {
     function __construct()
     {
-        print "Bienvenido a mi tienda virtual";
+        $db = Mysqldb::getInstance()->getDatabase();
+
+        print 'Bienvenido a mi tienda virtual';
     }
 }
-
-
-
-?>
