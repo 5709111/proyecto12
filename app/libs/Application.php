@@ -18,9 +18,7 @@ class Application
     function __construct()
     {
 
-        $db = Mysqldb::getInstance()->getDatabase();
-
-        $url = $this->separarURL();
+        $this->separarURL();
 
         // para ver la url array var_dump($url);
 
@@ -29,12 +27,32 @@ class Application
             require_once '../app/controllers/LoginController.php';
             $page = new LoginController();
             $page->index();
-        }elseif (file_exists('../app/controllers/' . ucfirst($this->urlController) . 'Controller.php'))
+        }elseif (file_exists('../app/controllers/' . ucfirst($this->urlController) . 'Controller.php')) //por si el controlador no existe
         {
             $controller = ucfirst($this->urlController) . 'Controller';
             require_once '../app/controllers/' . $controller . '.php';
             $this->urlController = new $controller;
-            $this->urlController->index();
+
+            if (method_exists($this->urlController, $this->urlAction) &&
+                is_callable(array($this->urlController, $this->urlAction))){
+                if ( ! empty($this->urlParamsur) ){
+                    call_user_func_array(array($this->urlController, $this->urlAction), $this->urlParams );
+                } else {
+                    $this->urlController->{$this->urlAction}();
+                }
+            }else {
+
+                if(strlen($this->urlAction) == 0){
+                    $this->urlController->index();
+                }else {
+                    header('HTTP/1.0 404 Not Found');
+                    //Tratamos el error producido cuando creemos el controlador de Error
+                }
+            }
+        }else {
+            require_once '../app/controllers/LoginController.php';
+            $page = new LoginController();
+            $page->index();
         }
 
     }
@@ -55,6 +73,7 @@ class Application
             unset($url[0], $url[1]);
 
             $this->urlParams = array_values($url);
+
 
         }
 
