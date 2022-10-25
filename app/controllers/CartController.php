@@ -9,9 +9,28 @@ class CartController extends Controller
         $this->model = $this->model('Cart');
     }
 
-    public function index()
+    public function index($errors = [])
     {
+        $session = new Session();
 
+        if ($session->getLogin()) {
+
+            $user_id = $session->getUserId();
+            $cart = $this->model->getCart($user_id);
+
+            $data = [
+                'titulo' => 'Carrito',
+                'menu' => true,
+                'user_id' => $user_id,
+                'data' => $cart,
+                'errors' => $errors
+            ];
+
+            $this->view('carts/index', $data);
+
+        } else {
+            header('location:' . ROOT);
+        }
     }
 
     public function addProduct($product_id, $user_id)
@@ -23,6 +42,24 @@ class CartController extends Controller
                 array_push($errors, 'Error al insertar el producto en el carrito');
             }
         }
-        $this->index();
+        $this->index($errors);
+    }
+
+    public function update()
+    {
+        if (isset($_POST['rows']) && isset($_POST['user_id'])) {
+            $errors = [];
+            $rows = $_POST['rows'];
+            $user_id = $_POST['user_id'];
+
+            for ($i = 0; $i < $rows; $i++) {
+                $product_id = $_POST['i'.$i];
+                $quantity = $_POST['c'.$i];
+                if ( ! $this->model->update($user_id, $product_id, $quantity)) {
+                    array_push($errors, 'Error al actualizar el producto');
+                }
+            }
+            $this->index($errors);
+        }
     }
 }
