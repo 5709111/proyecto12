@@ -6,23 +6,25 @@ class SearchController extends Controller
 
     public function __construct()
     {
-        $this->model=$this->model('Search');
+        $this->model = $this->model('Search');
     }
 
     public function products()
     {
-        $search=$_POST['search']?? '';
-        if ($search !=''){
-            $dataSearch= $this->model->getProducts($search);
+        $search = $_POST['search'] ?? '';
 
-            $data=[
-                'titulo'=> 'Buscador de productos',
-                'subtitle'=>'Resultado de la busqueda',
+        if ($search != '') {
+            $dataSearch = $this->model->getProducts($search);
+
+            $data = [
+                'titulo' => 'Buscador de productos',
+                'subtitle' => 'Resultado de la búsqueda',
                 'data' => $dataSearch,
-                'menu'=> true,
+                'menu' => true,
             ];
-            $this->view('search/search',$data);
-        } else{
+
+            $this->view('search/search', $data);
+        } else {
             header('location:' . ROOT);
         }
     }

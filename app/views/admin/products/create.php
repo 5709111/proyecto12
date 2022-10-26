@@ -138,7 +138,7 @@
             </div>
             <div class="form-group text-left">
                 <label for="status">Estado del producto:</label>
-                <select class="form-control" name="status" id="status">
+                <select class="form-control" name="status" id="status" required>
                     <option value="">Selecciona el estado del producto</option>
                     <?php foreach ($data['status'] as $status) : ?>
                         <option value="<?= $status->value ?>"

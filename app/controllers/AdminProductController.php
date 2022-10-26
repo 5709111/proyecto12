@@ -207,17 +207,21 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
             //Books
-            $author = Validate::text($_POST['author'] ?: 'Pepe');
-            $publisher = Validate::text($_POST['publisher'] ?: 'José');
-            $pages = Validate::number($_POST['pages'] ?: '100');
+            $author = Validate::text($_POST['author'] ?: '');
+            $publisher = Validate::text($_POST['publisher'] ?: '');
+            $pages = Validate::number($_POST['pages'] ?: '');
             //Courses
             $people = Validate::text($_POST['people'] ?? '');
             $objetives = Validate::text($_POST['objetives'] ?? '');
             $necesites = Validate::text($_POST['necesites'] ?? '');
+            $status = Validate::text($_POST['status'] ?? '');
 
             // Validamos la información
             if (empty($name)) {
                 array_push($errors, 'El nombre del producto es requerido');
+            }
+            if (empty($status)) {
+                array_push($errors, 'El estado del producto es requerida');
             }
             if (empty($description)) {
                 array_push($errors, 'La descripción del producto es requerida');
@@ -234,6 +238,7 @@ class AdminProductController extends Controller
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
                 array_push($errors, 'El descuento no puede ser mayor que el precio');
             }
+
             if ( ! Validate::date($published) ) {
                 array_push($errors, 'La fecha o su formato no es correcto');
             } elseif ( ! Validate::dateDif($published)) {

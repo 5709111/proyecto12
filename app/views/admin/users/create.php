@@ -1,4 +1,4 @@
-<?php include_once(VIEWS . 'header.php')?>required
+<?php include_once(VIEWS . 'header.php')?>
     <div class="card p-4 bg-light">
         <div class="card-header">
             <h1 class="text-center">Alta de un usuario administrador</h1>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group text-left">
                     <input type="submit" value="Enviar" class="btn btn-success">
-                    <a href="<?= ROOT ?>adminuser" class="btn btn-info">Regresar</a>
+                    <a href="<?= ROOT ?>adminUser" class="btn btn-info">Regresar</a>
                 </div>
             </form>
         </div>
